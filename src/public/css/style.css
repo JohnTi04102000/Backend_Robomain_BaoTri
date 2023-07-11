@@ -1,0 +1,26 @@
+h1 {
+  color: red;
+  border: 1px solid green;
+}
+
+.createUser {
+  display: block;
+  text-align: center;
+}
+
+.btn_submit {
+  margin-top: 15px;
+}
+
+.btn-save {
+  margin-top: 15px;
+  cursor    : pointer;
+}
+
+.uploadFile {
+  padding: 15px;
+}
+
+.uploadFile label {
+  display: block;
+}
