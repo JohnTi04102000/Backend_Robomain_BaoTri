@@ -14,12 +14,14 @@ import initAPIUsedAsset from "./route/apiUsedAssets";
 import initAPIEquipment from "./route/apiEquipment";
 import initAPITool from "./route/apiTool";
 import initAPIAccount from "./route/apiAccount";
+import cors from 'cors'
 
 require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT;
 
+app.use(cors())
 //Config body-parse to send data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
