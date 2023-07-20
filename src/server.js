@@ -13,6 +13,7 @@ import initAPITask from "./route/apiTask";
 import initAPIUsedAsset from "./route/apiUsedAssets";
 import initAPIEquipment from "./route/apiEquipment";
 import initAPITool from "./route/apiTool";
+import initAPIAccount from "./route/apiAccount";
 
 require("dotenv").config();
 
@@ -64,6 +65,9 @@ initAPIEquipment(app);
 
 //init api tool
 initAPITool(app);
+
+//init api account
+initAPIAccount(app);
 
 app.listen(port, () => {
   console.log("listening on port: " + port);

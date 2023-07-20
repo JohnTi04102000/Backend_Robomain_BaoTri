@@ -67,9 +67,11 @@ let deleteUser = async (req, res) => {
   });
 };
 
+
+
 module.exports = {
   getALLUser,
   createNewUser,
   updateUser,
-  deleteUser,
+  deleteUser
 };
