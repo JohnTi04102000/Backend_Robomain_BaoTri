@@ -51,7 +51,6 @@ let updateUser = async (req, res) => {
     message: "Success",
   });
 };
-
 let deleteUser = async (req, res) => {
   let idUser = req.params.id;
   if (!idUser) {
