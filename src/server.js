@@ -19,8 +19,9 @@ import cors from 'cors'
 require("dotenv").config();
 
 const app = express();
-app.use(cors({credentials: true, origin: 'http://robomain.com.vn:1010'}));
+app.use(cors({credentials: true, origin: 'http://localhost:3000/'}));
 const port = process.env.PORT;
+const publicIPAddress = '103.98.160.26';
 //Config body-parse to send data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -70,6 +71,6 @@ initAPITool(app);
 //init api account
 initAPIAccount(app);
 
-app.listen(port, () => {
+app.listen(port, publicIPAddress, () => {
   console.log("listening on port: " + port);
 });
