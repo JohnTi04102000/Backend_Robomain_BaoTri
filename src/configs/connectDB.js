@@ -8,6 +8,7 @@ const pool = mysql.createPool({
   password: "30122002",
   database: "robomain_BaoTri",
 });
+
 // const pool = mysql.createPool({
 //   host: "localhost",
 //   user: "root",
