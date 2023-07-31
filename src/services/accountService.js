@@ -17,6 +17,7 @@ let handleLogin = (email, password) => {
                 {
                     let getUser = await getInfoUser(email);
                     userData.errCode = 3;
+                    userData.message = "Login successful";
                     userData.userInfo = getUser[0].name_User;
                 }
                 else{

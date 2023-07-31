@@ -19,9 +19,15 @@ import cors from 'cors'
 require("dotenv").config();
 
 const app = express();
+//Config server
 app.use(cors({credentials: true, origin: '103.98.160.26'}));
 const port = process.env.PORT;
 const publicIPAddress = '103.98.160.26';
+
+//Config local
+// app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+// const port = process.env.PORT;
+
 //Config body-parse to send data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -71,6 +77,12 @@ initAPITool(app);
 //init api account
 initAPIAccount(app);
 
+//Config server
 app.listen(port, publicIPAddress, () => {
   console.log("listening on port: " + port);
 });
+
+//Config local
+// app.listen(port, () => {
+//   console.log("listening on port: " + port);
+// });

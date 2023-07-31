@@ -20,8 +20,8 @@ let getALLWorkOrders = async (req, res) => {
     }
 
     function generateRandomId() {
-      const timestamp = new Date().getTime().toString(16); // Convert timestamp to hexadecimal
-      const randomString = Math.random().toString(16).substring(2); // Generate random hexadecimal string
+      const timestamp = new Date().getTime().toString(6); // Convert timestamp to hexadecimal
+      const randomString = Math.random().toString(6).substring(2); // Generate random hexadecimal string
       return timestamp + randomString;
     }
     
