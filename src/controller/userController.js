@@ -10,13 +10,26 @@ let getALLUser = async (req, res) => {
 };
 
 let createNewUser = async (req, res) => {
-  let { id, name_User, birth, role_User, sex } = req.body;
+  let { name_User, birth, role_User, sex } = req.body;
 
-  if (!id || !name_User || !birth || !role_User || !sex) {
+  if (!name_User || !birth || !role_User || !sex) {
     return res.status(404).json({
       message: "failed",
     });
   }
+
+  function generateRandomId() {
+    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+    }
+    return result;
+  }
+
+  let id = "user" + generateRandomId();
 
   const birth_datetime = new Date(birth);
 
@@ -34,8 +47,9 @@ let createNewUser = async (req, res) => {
 };
 
 let updateUser = async (req, res) => {
-  let { id, name_User, birth, role_User, sex, idUser } = req.body;
-  if (!id || !name_User || !birth || !role_User || !sex || !idUser) {
+  console.log(req.body);
+  let {name_User, birth, role_User, sex, id  } = req.body;
+  if (!id || !name_User || !birth || !role_User || !sex) {
     return res.status(404).json({
       message: "failed",
     });
@@ -44,33 +58,34 @@ let updateUser = async (req, res) => {
   const birth_datetime = new Date(birth);
 
   const [user] = await pool.execute(
-    "UPDATE users SET id = ?, name_User = ?, birth = ?, role_User = ?, sex = ? where id = ?",
-    [id, name_User, birth_datetime, role_User, sex, idUser]
+    "UPDATE users SET name_User = ?, birth = ?, role_User = ?, sex = ? where id = ?",
+    [name_User, birth_datetime, role_User, sex, id]
   );
   return res.status(200).json({
     message: "Success",
   });
 };
+
+
 let deleteUser = async (req, res) => {
   let idUser = req.params.id;
+  console.log("id user: " + idUser);
   if (!idUser) {
     return res.status(404).json({
       message: "failed",
     });
+  } else {
+    await pool.execute("DELETE FROM users WHERE id = ?", [idUser]);
+    console.log("check: ", idUser);
+    return res.status(200).json({
+      message: "Success",
+    });
   }
-
-  await pool.execute("DELETE FROM users WHERE id = ?", [idUser]);
-  console.log("check: ", idUser);
-  return res.status(200).json({
-    message: "Success",
-  });
 };
-
-
 
 module.exports = {
   getALLUser,
   createNewUser,
   updateUser,
-  deleteUser
+  deleteUser,
 };
