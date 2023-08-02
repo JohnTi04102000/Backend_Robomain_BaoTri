@@ -4,7 +4,7 @@ let getALLUser = async (req, res) => {
   const [rows, fields] = await pool.execute("SELECT * FROM users");
 
   return res.status(200).json({
-    message: "Hello",
+    message: "Get all users successful",
     data: rows,
   });
 };
@@ -48,8 +48,8 @@ let createNewUser = async (req, res) => {
 
 let updateUser = async (req, res) => {
   console.log(req.body);
-  let {name_User, birth, role_User, sex, id  } = req.body;
-  if (!id || !name_User || !birth || !role_User || !sex) {
+  let {name_User, birth, role_User, sex, image, id  } = req.body;
+  if (!id || !name_User || !birth || !role_User || !sex || !image) {
     return res.status(404).json({
       message: "failed",
     });
@@ -58,8 +58,8 @@ let updateUser = async (req, res) => {
   const birth_datetime = new Date(birth);
 
   const [user] = await pool.execute(
-    "UPDATE users SET name_User = ?, birth = ?, role_User = ?, sex = ? where id = ?",
-    [name_User, birth_datetime, role_User, sex, id]
+    "UPDATE users SET name_User = ?, birth = ?, role_User = ?, sex = ?, image = ? where id = ?",
+    [name_User, birth_datetime, role_User, sex, image, id]
   );
   return res.status(200).json({
     message: "Success",

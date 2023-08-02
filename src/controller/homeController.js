@@ -62,6 +62,7 @@ let uploadFile = async (req, res) => {
 };
 
 let handleUploadFile = async (req, res) => {
+  console.log(req.file);
   if (req.fileValidationError) {
     return res.send(req.fileValidationError);
   } else if (!req.file) {
@@ -69,9 +70,9 @@ let handleUploadFile = async (req, res) => {
   }
 
   // Display uploaded image for user validation
-  res.send(
-    `You have uploaded this image: <hr/><img src="/image/${req.file.filename}" width="500"><hr /><a href="/upload">Upload another image</a>`
-  );
+  // res.send(
+  //   `You have uploaded this image: <hr/><img src="/image/${req.file.filename}" width="500"><hr /><a href="/system/user-manage/users">Upload another image</a>`
+  // );
   // });
 };
 
