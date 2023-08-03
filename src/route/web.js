@@ -38,8 +38,9 @@ const initWebRoute = (app) => {
 
 
   router.get("/upload", homeController.uploadFile);
+  router.get("/get-image/:imageName", homeController.getImage);
 
-  router.post('/system/user-manage/users/upload-profile-pic', upload.single('profile_pic'), homeController.handleUploadFile);
+  // router.post('/system/user-manage/users/upload-profile-pic', upload.single('profile_pic'), homeController.handleUploadFile);
 
   router.post('/upload-multiple-pic', upload.array('multiple_pic', 3), homeController.handleUploadMultiple);
   //Tiền tố phía trước router

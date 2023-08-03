@@ -61,6 +61,15 @@ let uploadFile = async (req, res) => {
   return res.render("uploadFile.ejs");
 };
 
+let getImage = async (req, res) => {
+  let imageName = req.params.imageName;
+
+  let imageURL = `http://localhost:8080/image/${imageName}`;
+  console.log(imageURL);
+  res.status(200).json({ imageURL });
+
+}
+
 let handleUploadFile = async (req, res) => {
   console.log(req.file);
   if (req.fileValidationError) {
@@ -102,4 +111,5 @@ module.exports = {
   uploadFile,
   handleUploadFile,
   handleUploadMultiple,
+  getImage
 };
