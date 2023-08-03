@@ -10,57 +10,56 @@ let getALLWorkOrders = async (req, res) => {
 };
 
 let createNewWorkOrder = async (req, res) => {
+  console.log(req.body);
   let {
-    idAsset,
+    id_Asset,
     priority,
-    type,
-    status,
+    type_WO,
+    status_WO,
     startDate,
     completeDate,
-    description,
+    description_WO,
     note,
+    assign
   } = req.body;
 
   if (
-    !idAsset ||
-    !priority ||
-    !type ||
-    !status ||
-    !startDate ||
-    !completeDate ||
-    !description ||
-    !note
-  ) {
+    !id_Asset || !priority || !type_WO || !status_WO || !startDate || !completeDate ||
+    !description_WO || !note || !assign) 
+    {
     return res.status(404).json({
       message: "WO failed",
     });
   }
-
-  function generateRandomId() {
-    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-
-    for (let i = 0; i < 6; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      result += characters[randomIndex];
+  else{
+    function generateRandomId() {
+      const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+      let result = "";
+  
+      for (let i = 0; i < 6; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters[randomIndex];
+      }
+      return result;
     }
-    return result;
+  
+    // Tạo một mã ngẫu nhiên
+    let id_WO = "workOrder" + generateRandomId();
+  
+    let start = new Date(startDate);
+    let end = new Date(completeDate);
+  
+    await pool.execute(
+      "INSERT INTO workOrders values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [id_WO, id_Asset, priority, type_WO, status_WO, start, end, description_WO, note, assign]
+    );
+  
+    return res.status(200).json({
+      message: "Success",
+    });
   }
 
-  // Tạo một mã ngẫu nhiên
-  let id_WO = "workOrder" + generateRandomId();
-
-  let start = new Date(startDate);
-  let end = new Date(completeDate);
-
-  await pool.execute(
-    "INSERT INTO workOrders values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    [id_WO, idAsset, priority, type, status, start, end, description, note]
-  );
-
-  return res.status(200).json({
-    message: "Success",
-  });
+  
 };
 
 let updateWorkOrder = async (req, res) => {

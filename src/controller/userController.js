@@ -5,7 +5,7 @@ let name_file;
 let handleUploadFile = async (req, res) => {
   console.log('file up: ',req.file);
   name_file = req.file.filename;
-  console.log(name_file);
+  console.log('name_file: ',name_file);
   if (req.fileValidationError) {
     return res.send(req.fileValidationError);
   } else if (!req.file) {
