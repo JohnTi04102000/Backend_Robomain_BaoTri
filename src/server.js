@@ -31,7 +31,6 @@ const publicIPAddress = '103.98.160.26';
 //Config body-parse to send data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use('/src/public/', express.static("image"));
 
 //Config view engine
 configViewEngine(app);
