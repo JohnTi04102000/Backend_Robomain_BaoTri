@@ -42,7 +42,6 @@ let checkEmail = (email) => {
     return new Promise( async (resolve, reject) => {
         try{
             const [user, fields] = await pool.execute("SELECT * FROM accounts where email = ?", [email]);
-            // console.log('check user: ', user);
             if(!user.length)
             {
                 resolve(false);
@@ -80,7 +79,20 @@ let getInfoUser = (email) => {
     })
 }
 
+let handleSignUp = (email, password, userId) => {
+    return new Promise( async (resolve, reject) => {
+        try{
+             
+        }
+        catch(err){
+            reject(e);
+        }
+    })
+
+}
+
 
 module.exports = {
-    handleLogin
+    handleLogin,
+    handleSignUp
 }

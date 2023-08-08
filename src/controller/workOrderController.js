@@ -127,7 +127,7 @@ let updateWorkOrder = async (req, res) => {
       ]
     );
     return res.status(200).json({
-      message: "Success",
+      message: "Update success",
     });
   }
 };
@@ -136,14 +136,16 @@ let deleteWorkOrder = async (req, res) => {
   let id_WO = req.params.id;
   if (!id_WO) {
     return res.status(404).json({
-      message: "failed",
+      message: "Update failed",
     });
   }
-  await pool.execute("DELETE FROM workOrders WHERE id = ?", [id_WO]);
-  console.log("check: ", id_WO);
-  return res.status(200).json({
-    message: "Success",
-  });
+  else{
+    await pool.execute("DELETE FROM workOrders WHERE id = ?", [id_WO]);
+    console.log("check: ", id_WO);
+    return res.status(200).json({
+      message: "Success",
+    });
+  }
 };
 
 module.exports = {
