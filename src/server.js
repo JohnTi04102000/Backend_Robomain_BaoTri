@@ -14,24 +14,26 @@ import initAPIUsedAsset from "./route/apiUsedAssets";
 import initAPIEquipment from "./route/apiEquipment";
 import initAPITool from "./route/apiTool";
 import initAPIAccount from "./route/apiAccount";
+import checkPermission from "./middleware/authManagerMantenance";
 import cors from 'cors'
+
 
 require("dotenv").config();
 
 const app = express();
-//Config server
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
-const port = process.env.PORT;
-const publicIPAddress = '103.98.160.26';
 
-//Config local
+//Config server
 // app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 // const port = process.env.PORT;
+// const publicIPAddress = '103.98.160.26';
+
+//Config local
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+const port = process.env.PORT;
 
 //Config body-parse to send data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 //Config view engine
 configViewEngine(app);
 
@@ -77,12 +79,15 @@ initAPITool(app);
 //init api account
 initAPIAccount(app);
 
-//Config server
-app.listen(port, publicIPAddress, () => {
-  console.log("listening on port: " + port);
-});
+//checkPermission();
 
-//Config local
-// app.listen(port, () => {
+//Config server
+// app.listen(port, publicIPAddress, () => {
 //   console.log("listening on port: " + port);
 // });
+
+//Config local
+app.listen(port, () => {
+  console.log("listening on port: " + port);
+
+});

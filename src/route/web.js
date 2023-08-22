@@ -3,7 +3,9 @@ import homeController from "../controller/homeController";
 let router = express.Router();
 import multer from 'multer';
 import path from 'path';
+
 var appRoot = require('app-root-path');
+require("dotenv").config();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

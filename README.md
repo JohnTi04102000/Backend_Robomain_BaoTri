@@ -45,3 +45,9 @@
 [API Delete Asset](http://103.98.160.26:1010/api/v1/delete-asset/:id)
 #Xoá asset bằng cách truyền id
 
+[API Get WO Near Expire](http://103.98.160.26:1010/api/v1/getExpireWO)
+#Lấy danh sách WO gần đến hạn
+
+[API Get WO By ID](http://103.98.160.26:1010/api/v1/getWO/:id)
+#Lấy WO của user đang đăng nhặp bằng id
+

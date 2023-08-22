@@ -33,7 +33,8 @@ const initAPIUser = (app) => {
   router.post("/create-user", APIControlller.createNewUser);
   router.put("/update-user", APIControlller.updateUser);
   router.delete("/delete-user/:id", APIControlller.deleteUser);
-  router.post('/system/user-manage/users/upload-profile-pic', upload.single('profile_pic'), APIControlller.handleUploadFile);
+  //router.post('/system/user-manage/users/upload-profile-pic', upload.single('profile_pic'), APIControlller.handleUploadFile);
+  router.post('/upload-profile-pic', upload.single('profile_pic'), APIControlller.handleUploadFile);
 
   //Tiền tố phía trước router
   return app.use("/api/v1", router);

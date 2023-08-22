@@ -7,7 +7,6 @@ let handleLogin = (email, password) => {
             let isExist = await checkEmail(email);
             // console.log('check exist', isExist);
             if(isExist) {
-                userData.errCode = 0;
                 const [rows, fields] = await pool.execute("SELECT pass FROM accounts where email = ?", [email]);
                 const pass_User = rows[0].pass;
                 // console.log('pass: ' + pass_User);
@@ -18,7 +17,7 @@ let handleLogin = (email, password) => {
                     let getUser = await getInfoUser(email);
                     userData.errCode = 3;
                     userData.message = "Login successful";
-                    userData.userInfo = getUser[0].name_User;
+                    userData.userInfo = getUser[0].id;
                 }
                 else{
                     userData.errCode = 2;

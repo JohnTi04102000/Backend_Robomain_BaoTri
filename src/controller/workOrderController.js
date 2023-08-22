@@ -9,6 +9,34 @@ let getALLWorkOrders = async (req, res) => {
   });
 };
 
+let getWOById = async (req, res) => {
+
+  let id_user = req.params.id;
+  if (!id_user) {
+    return res.status(404).json({
+      message: `Get all work order of ${id_user} successfully` ,
+    });
+  }
+  else{
+    const [rows, fields] = await pool.execute("Select * FROM workOrders WHERE assign = ?", [id_user]);
+    //console.log("check: ", id_user);
+    return res.status(200).json({
+      message: `Get workOrder of ${id_user} successful`,
+      data: rows,
+    });
+  }
+
+}
+
+let getExpireWO = async (req, res) => {
+  const [rows, fields] = await pool.execute("SELECT * FROM workOrders WHERE completeDate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 10 DAY) ORDER BY completeDate ASC;");
+
+  return res.status(200).json({
+    message: "List WO near expire",
+    data: rows,
+  });
+}
+
 let createNewWorkOrder = async (req, res) => {
   console.log(req.body);
   let {
@@ -153,4 +181,6 @@ module.exports = {
   createNewWorkOrder,
   updateWorkOrder,
   deleteWorkOrder,
+  getWOById,
+  getExpireWO
 };
