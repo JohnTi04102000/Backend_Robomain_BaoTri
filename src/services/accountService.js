@@ -18,6 +18,7 @@ let handleLogin = (email, password) => {
                     userData.errCode = 3;
                     userData.message = "Login successful";
                     userData.userInfo = getUser[0].id;
+                    userData.role = getUser[0].role_User;
                 }
                 else{
                     userData.errCode = 2;

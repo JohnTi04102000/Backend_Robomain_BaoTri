@@ -21,7 +21,7 @@ let checkPermission = async (req, res, next) => {
 
         let role = info_User[0].role_User
         console.log(role);
-        if(role === 'maintenance manager')
+        if(role === 'Maintenance manager')
         {
           next();
         }

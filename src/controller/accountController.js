@@ -25,7 +25,7 @@ let Login = async (req, res) => {
 
     if (userData && userData.errCode === 3) {
       let userToken = createJWT(userData.userInfo);
-      console.log(userData.userInfo);
+      console.log(userData);
 
       let verifyToken = verifyJWT(userToken);
 
@@ -33,6 +33,7 @@ let Login = async (req, res) => {
         errCode: userData.errCode,
         message: userData.message,
         infoUser: userData.userInfo,
+        roleUser: userData.role,
         token: userToken,
         verifyToken: verifyToken,
       });
