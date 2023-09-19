@@ -6,6 +6,7 @@ import APIWorkOrder from "../controller/workOrderController";
 const initAPIWorkOrder = (app) => {
   router.get("/workOrders", APIWorkOrder.getALLWorkOrders);
   router.get("/getWO/:id", APIWorkOrder.getWOById);
+  router.get("/getAllWOComplete", APIWorkOrder.getAllWOComplete);
   router.get("/getWOComplete/:id", APIWorkOrder.getWOCompleteById);
   router.get("/getExpireWO/:id", APIWorkOrder.getExpireWO);
   router.post("/create-workOrder", checkPermission,  APIWorkOrder.createNewWorkOrder);

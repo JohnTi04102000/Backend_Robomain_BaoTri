@@ -28,6 +28,14 @@ let getWOById = async (req, res) => {
 
 }
 
+let getAllWOComplete = async (req, res) => {
+  const [rows, fields] = await pool.execute("Select * FROM workOrders WHERE status_WO = 'Close'");
+  return res.status(200).json({
+    message: `Get all workOrder completed successful`,
+    data: rows,
+  });
+}
+
 let getWOCompleteById = async(req, res) => {
 
   let id_user = req.params.id;
@@ -51,7 +59,7 @@ let getExpireWO = async (req, res) => {
 
   let id_User = req.params.id;
   console.log("id: " + id_User);
-  const [rows, fields] = await pool.execute("SELECT * FROM workOrders WHERE assign = ? AND completeDate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 10 DAY) ORDER BY completeDate ASC;", [id_User]);
+  const [rows, fields] = await pool.execute("SELECT * FROM workOrders WHERE assign = ? AND status_WO != 'Close' AND completeDate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 10 DAY) ORDER BY completeDate ASC;", [id_User]);
 
   return res.status(200).json({
     message: "List WO near expire",
@@ -224,5 +232,6 @@ module.exports = {
   getWOById,
   getExpireWO,
   completeWorkOrder,
+  getAllWOComplete,
   getWOCompleteById
 };

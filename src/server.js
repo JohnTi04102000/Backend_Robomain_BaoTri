@@ -23,7 +23,7 @@ require("dotenv").config();
 const app = express();
 
 //Config server
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors());
 const port = process.env.PORT;
 const publicIPAddress = '103.98.160.26';
 
