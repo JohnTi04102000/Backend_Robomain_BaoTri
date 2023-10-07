@@ -14,7 +14,7 @@ let getWOById = async (req, res) => {
   let id_user = req.params.id;
   if (!id_user) {
     return res.status(404).json({
-      message: `Get all work order of ${id_user} successfully` ,
+      message: `Get all work order of ${id_user} failed` ,
     });
   }
   else{
