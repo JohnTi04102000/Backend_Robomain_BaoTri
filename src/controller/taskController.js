@@ -84,8 +84,25 @@ let getTaskById = async (req, res) => {
   }
 };
 
+let deleteTaskById = async (req, res) => {
+  let id_task = req.params.id;
+  if (!id_task) {
+    return res.status(404).json({
+      message: "Delete task failed",
+    });
+  }
+  else{
+    await pool.execute("DELETE FROM tasks WHERE id = ?", [id_task]);
+    console.log("check: ", id_task);
+    return res.status(200).json({
+      message: "Delete task successfully",
+    });
+  }
+}
+
 module.exports = {
   getALLTasks,
   createTask,
   getTaskById,
+  deleteTaskById
 };

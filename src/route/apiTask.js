@@ -6,6 +6,7 @@ const initAPITask = (app) => {
   router.get("/tasks", APITask.getALLTasks);
   router.get("/getTask/:id", APITask.getTaskById);
   router.post("/create-task", APITask.createTask);
+  router.delete("/delete-task/:id", APITask.deleteTaskById);
 
   //Tiền tố phía trước router
   return app.use("/api/v1", router);

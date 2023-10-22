@@ -96,42 +96,49 @@ let createNewWorkOrder = async (req, res) => {
       message: "WO failed",
     });
   } else {
-    function generateRandomId() {
-      const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-      let result = "";
-
-      for (let i = 0; i < 6; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        result += characters[randomIndex];
+    try
+    {
+      function generateRandomId() {
+        const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+        let result = "";
+  
+        for (let i = 0; i < 6; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          result += characters[randomIndex];
+        }
+        return result;
       }
-      return result;
+  
+      // Tạo một mã ngẫu nhiên
+      let id_WO = "workOrder" + generateRandomId();
+  
+      let start = new Date(startDate);
+      let end = new Date(completeDate);
+  
+      await pool.execute(
+        "INSERT INTO workOrders values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+          id_WO,
+          id_Asset,
+          priority,
+          type_WO,
+          status_WO,
+          start,
+          end,
+          description_WO,
+          note,
+          assign,
+        ]
+      );
+  
+      return res.status(200).json({
+        message: "Success",
+      });
     }
-
-    // Tạo một mã ngẫu nhiên
-    let id_WO = "workOrder" + generateRandomId();
-
-    let start = new Date(startDate);
-    let end = new Date(completeDate);
-
-    await pool.execute(
-      "INSERT INTO workOrders values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [
-        id_WO,
-        id_Asset,
-        priority,
-        type_WO,
-        status_WO,
-        start,
-        end,
-        description_WO,
-        note,
-        assign,
-      ]
-    );
-
-    return res.status(200).json({
-      message: "Success",
-    });
+    catch(err)
+    {
+      console.log(err);
+    }
   }
 };
 
