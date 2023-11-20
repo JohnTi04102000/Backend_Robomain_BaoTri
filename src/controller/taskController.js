@@ -10,7 +10,7 @@ let getALLTasks = async (req, res) => {
 };
 
 let createTask = async (req, res) => {
-  console.log(req.body);
+  console.log('create-taskk ', req.body);
   let { id_WO, description_Task, startDate, files, status_Task } = req.body;
 
   if (!id_WO || !description_Task || !startDate || !files || !status_Task) {
@@ -41,6 +41,7 @@ let createTask = async (req, res) => {
       );
 
       if (result) {
+        console.log('result ', result);
         return res.status(200).json({
           message: "Create task successfully",
         });
