@@ -15,6 +15,8 @@ import initAPIEquipment from "./route/apiEquipment";
 import initAPITool from "./route/apiTool";
 import initAPIAccount from "./route/apiAccount";
 import initAPISchedule from "./route/apiSchedule";
+import initRoomRoute from "./route/apiRoom";
+import initScheduleRoute from "./route/apiSchedule"
 import cors from 'cors'
 
 
@@ -81,6 +83,10 @@ initAPIAccount(app);
 
 //init api schedule
 initAPISchedule(app);
+
+//init api room
+initRoomRoute(app);
+
 
 //checkPermission();
 
