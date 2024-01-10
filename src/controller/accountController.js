@@ -48,7 +48,61 @@ let Login = async (req, res) => {
   }
 };
 
+let createAccount = async (req, res) => {
+  try {
+    console.log("check body: ", req.body);
+    let {
+      email,
+      password,
+      id_User
+    } = req.body;
+
+    if (
+      !email ||
+      !password ||
+      !id_User
+    ) {
+      return res.status(404).json({
+        message: "Insert to account failed",
+      });
+    }
+
+    await pool.execute("INSERT INTO accounts values (?, ?, ?)", [
+      email,
+      password,
+      id_User,
+    ]);
+
+    return res.status(200).json({
+      message: "Insert to account successful",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+let deleteAccount = async (req, res) => {
+  try {
+    let idAccount = req.params.id;
+    console.log("id: " + idAccount);
+    if (!idAccount) {
+      return res.status(404).json({
+        message: "Delete account failed",
+      });
+    } else {
+      await pool.execute("DELETE FROM accounts WHERE id = ?", [idAccount]);
+      return res.status(200).json({
+        message: "Delete account success",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getALLAccounts,
   Login,
+  createAccount,
+  deleteAccount
 };

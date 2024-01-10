@@ -13,22 +13,20 @@ let createAsset = async (req, res) => {
   try {
     console.log("check body: ", req.body);
     let {
-      id_facitites,
+      id_Facility,
       price,
       quantity,
       type_asset,
-      manufacturerDate,
-      id_manufacturer,
+      importDate,
       image,
     } = req.body;
 
     if (
-      !id_facitites ||
+      !id_Facility ||
       !price ||
       !quantity ||
       !type_asset ||
-      !manufacturerDate ||
-      !id_manufacturer ||
+      !importDate ||
       !image
     ) {
       return res.status(404).json({
@@ -49,16 +47,15 @@ let createAsset = async (req, res) => {
 
     let id = "asset" + generateRandomId();
 
-    const manufacturer_datetime = new Date(manufacturerDate);
+    const import_datetime = new Date(importDate);
 
-    await pool.execute("INSERT INTO assets values (?, ?, ?, ?, ?, ?, ?, ?)", [
+    await pool.execute("INSERT INTO assets values (?, ?, ?, ?, ?, ?, ?)", [
       id,
-      id_facitites,
+      id_Facility,
       price,
       quantity,
       type_asset,
-      manufacturer_datetime,
-      id_manufacturer,
+      import_datetime,
       image,
     ]);
 
@@ -97,7 +94,7 @@ let updateAsset = async (req, res) => {
       quantity,
       type_asset,
       manufacturerDate,
-      id_manufacturer,
+      image,
       id,
     } = req.body;
     console.log(req.body);
@@ -108,7 +105,7 @@ let updateAsset = async (req, res) => {
       !quantity ||
       !type_asset ||
       !manufacturerDate ||
-      !id_manufacturer
+      !image
     ) {
       return res.status(404).json({
         message: "Update asset failed",
@@ -117,14 +114,14 @@ let updateAsset = async (req, res) => {
       const manufacturer_datetime = new Date(manufacturerDate);
 
       await pool.execute(
-        "UPDATE assets SET id_facitites = ?, price = ?, quantity = ?, type_asset = ?, manufacturerDate= ?, id_manufacturer = ? where id = ? ",
+        "UPDATE assets SET id_facitites = ?, price = ?, quantity = ?, type_asset = ?, manufacturerDate= ?, image = ? where id = ? ",
         [
           id_facitites,
           price,
           quantity,
           type_asset,
           manufacturerDate,
-          id_manufacturer,
+          image,
           id,
         ]
       );
@@ -137,9 +134,25 @@ let updateAsset = async (req, res) => {
   }
 };
 
+let handleUploadFileAsset = async (req, res) => {
+  console.log("file up: ", req.file);
+  if (req.fileValidationError) {
+    return res.send(req.fileValidationError);
+  } else if (!req.file) {
+    return res.send("Please select an image to upload");
+  }
+
+  // Display uploaded image for user validation
+  // res.send(
+  //   `You have uploaded this image: <hr/><img src="/image/${req.file.filename}" width="500"><hr /><a href="/system/user-manage/users">Upload another image</a>`
+  // );
+  // });
+};
+
 module.exports = {
   getALLAssets,
   createAsset,
   deleteAsset,
   updateAsset,
+  handleUploadFileAsset
 };

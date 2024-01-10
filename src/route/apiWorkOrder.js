@@ -9,7 +9,7 @@ const initAPIWorkOrder = (app) => {
   router.get("/getAllWOComplete", APIWorkOrder.getAllWOComplete);
   router.get("/getWOComplete/:id", APIWorkOrder.getWOCompleteById);
   router.get("/getExpireWO/:id", APIWorkOrder.getExpireWO);
-  router.post("/create-workOrder", checkPermission,  APIWorkOrder.createNewWorkOrder);
+  router.post("/create-workOrder",  APIWorkOrder.createNewWorkOrder);
   router.put("/update-workOrder", APIWorkOrder.updateWorkOrder);
   router.put("/complete-workOrder/:id", APIWorkOrder.completeWorkOrder);
   router.delete("/delete-workOrder/:id", APIWorkOrder.deleteWorkOrder);

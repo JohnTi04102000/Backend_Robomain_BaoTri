@@ -12,9 +12,9 @@ let getALLTasks = async (req, res) => {
 let createTask = async (req, res) => {
   try {
     console.log("create-taskk ", req.body);
-    let { id_WO, description_Task, startDate, files, status_Task } = req.body;
+    let { id_WO, description_Task, startDate, endDate, note, status_Task } = req.body;
 
-    if (!id_WO || !description_Task || !startDate || !files || !status_Task) {
+    if (!id_WO || !description_Task || !startDate || !endDate || !note || !status_Task) {
       return res.status(404).json({
         message: "Wrong input data",
       });
@@ -34,11 +34,12 @@ let createTask = async (req, res) => {
       let id = "task" + generateRandomId();
 
       let start = new Date(startDate);
+      let end = new Date(endDate);
 
       try {
         let result = await pool.execute(
-          "INSERT INTO tasks values (?, ?, ?, ?, ?, ?)",
-          [id, id_WO, description_Task, start, files, status_Task]
+          "INSERT INTO tasks values (?, ?, ?, ?, ?, ?, ?)",
+          [id, id_WO, description_Task, start, end, note, status_Task]
         );
 
         if (result) {
@@ -113,9 +114,68 @@ let deleteTaskById = async (req, res) => {
   }
 };
 
+let updateStatusTask = async (req, res) => {
+  try {
+    let id_Task = req.params.id;
+    console.log(id_Task);
+
+    if (
+      !id_Task ) 
+      {
+      return res.status(404).json({
+        message: "failed",
+      });
+    } else {
+      let new_StatusTask = "Complete";
+      await pool.execute(
+        "UPDATE tasks SET status_Task = ? where id = ? ",
+        [
+          new_StatusTask,
+          id_Task,
+        ]
+      );
+      return res.status(200).json({
+        message: "Update status task successful",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+let updateNoteTask = async (req, res) => {
+  try {
+    let {id, note} = req.body;
+    console.log(req.body);
+
+    if (
+      !id || !note) 
+      {
+      return res.status(404).json({
+        message: "failed",
+      });
+    } else {
+      await pool.execute(
+        "UPDATE tasks SET note = ? where id = ? ",
+        [
+          note,
+          id,
+        ]
+      );
+      return res.status(200).json({
+        message: "Add note successful",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   getALLTasks,
   createTask,
   getTaskById,
   deleteTaskById,
+  updateStatusTask,
+  updateNoteTask
 };
