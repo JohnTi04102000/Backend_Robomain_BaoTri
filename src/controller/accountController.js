@@ -90,9 +90,45 @@ let deleteAccount = async (req, res) => {
         message: "Delete account failed",
       });
     } else {
-      await pool.execute("DELETE FROM accounts WHERE id = ?", [idAccount]);
+      await pool.execute("DELETE FROM accounts WHERE id_user = ?", [idAccount]);
       return res.status(200).json({
         message: "Delete account success",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+let updateAccount = async (req, res) => {
+  try {
+    let {
+      email,
+      password,
+      id_User
+    } = req.body;
+
+    if (
+      !email ||
+      !password ||
+      !id_User
+    ) {
+      return res.status(404).json({
+        message: "Update account failed",
+      });
+    } else {
+
+      await pool.execute(
+        "UPDATE accounts SET email = ?, pass = ?, id_user = ? where id_user = ?",
+        [
+          email,
+          password,
+          id_User,
+          id_User
+        ]
+      );
+      return res.status(200).json({
+        message: "Success",
       });
     }
   } catch (err) {
@@ -104,5 +140,6 @@ module.exports = {
   getALLAccounts,
   Login,
   createAccount,
-  deleteAccount
+  deleteAccount,
+  updateAccount
 };
