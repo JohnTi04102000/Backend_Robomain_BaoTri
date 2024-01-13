@@ -28,6 +28,23 @@ let getALLUser = async (req, res) => {
   });
 };
 
+let getUserByID = async (req, res) => {
+  try {
+    let id = req.params.id;
+    const [rows, fields] = await pool.execute(
+      "SELECT * FROM users where id = ?",
+      [id]
+    );
+
+    return res.status(200).json({
+      message: "Get information user successful",
+      data: rows,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 let createNewUser = async (req, res) => {
   try {
     console.log("check body: ", req.body);
@@ -118,4 +135,5 @@ module.exports = {
   updateUser,
   deleteUser,
   handleUploadFile,
+  getUserByID,
 };

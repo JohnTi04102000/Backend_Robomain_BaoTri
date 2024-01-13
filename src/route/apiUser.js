@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 
   // By default, multer removes file extensions so let's add them back
   filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+      cb(null, file.originalname);
   }
 });
 
@@ -30,6 +30,7 @@ let upload = multer({ storage: storage, fileFilter: imageFilter });
 
 const initAPIUser = (app) => {
   router.get("/users", APIControlller.getALLUser);
+  router.get("/user/:id", APIControlller.getUserByID);
   router.post("/create-user", APIControlller.createNewUser);
   router.put("/update-user", APIControlller.updateUser);
   router.delete("/delete-user/:id", APIControlller.deleteUser);
